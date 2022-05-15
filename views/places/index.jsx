@@ -21,7 +21,7 @@ function index (data) {
       <Def>
           <main>
               <h1>Places to Rant or Rave About</h1>
-              <div className='row'>
+              <div className='row d-flex justify-content-evenly py-4'>
                 {placesFormatted}
               </div>
           </main>

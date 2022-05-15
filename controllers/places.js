@@ -13,7 +13,15 @@ router.get('/', (req,res) => {
         state: 'AZ',
         cuisines: 'Coffee, Bakery',
         pic: '/images/rest-2.jpg'
-      }]      
+      },
+      {
+        name: 'H-Thai-ML',
+        city: 'Seattle',
+        state: 'WA',
+        cuisines: 'Thai, Pan-Asian',
+        pic: '/images/light-city-restaurant.jpg'
+      },
+    ]      
     res.render('places/index', {places})
 })
 
