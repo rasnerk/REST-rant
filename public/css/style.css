@@ -5,3 +5,12 @@ h1 {
 p {
   text-align: center;
 }
+
+#new-place-container {
+  display: flex;
+  justify-content: center;
+}
+
+#new-place-container form {
+  width: 35%;
+}
