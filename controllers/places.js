@@ -1,4 +1,5 @@
 const Place = require('../models/schemas/places')
+const Comment = require('../models/schemas/comment')
 
 const fetchAllPlaces = (req,res) => {
   Place.find({}, (err,docs) => {
@@ -23,9 +24,35 @@ const createNewPlace = (req,res) => {
 }
 
 const fetchSinglePlace = (req,res) => {
-  Place.findById(req.params.id, (err,doc) => {
-    if (err || doc === null) return res.render('error404')
-    res.render('places/show', { place: doc } )
+
+  Place.findById(req.params.id)
+  .populate('comments')
+  .then(place => {
+    res.render('places/show', { place } )
+  }).catch(err => {
+    console.log('error', err)
+    res.render('error404')
+  })
+}
+
+const addComment = (req, res) => {
+  req.body.rant === 'on' ? req.body.rant = true : req.body.rant = false;
+  Place.findById(req.params.id)
+  .then(place => {
+      Comment.create(req.body)
+      .then(comment => {
+          place.comments.push(comment.id)
+          place.save()
+          .then(() => {
+              res.redirect(`/places/${req.params.id}`)
+          })
+      })
+      .catch(err => {
+          res.render('error404')
+      })
+  })
+  .catch(err => {
+      res.render('error404')
   })
 }
 
@@ -50,4 +77,4 @@ const editPlace = (req,res) => {
   })
 }
 
-module.exports = { fetchAllPlaces, createNewPlace, fetchSinglePlace, updatePlace, deletePlace, editPlace }
+module.exports = { fetchAllPlaces, addComment, createNewPlace, fetchSinglePlace, updatePlace, deletePlace, editPlace }

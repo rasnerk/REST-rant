@@ -12,7 +12,7 @@ function home () {
                     </div>
                     <div className='col-2'>
                         <a href="/places">
-                            <button className="btn-primary">REST-Rants</button>
+                            <button className="btn btn-primary">REST-Rants</button>
                         </a>
                     </div>
                 </div>
