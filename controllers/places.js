@@ -9,6 +9,14 @@ const fetchAllPlaces = (req,res) => {
 
 const createNewPlace = (req,res) => {
   Place.create(req.body, (err,doc) => {
+    if (err && err.name == 'ValidationError') {
+      let message = 'Validation Error: '
+      for (let field in err.errors) {
+        message += `${field} was ${err.errors[field].value}.`
+        message += `${err.errors[field].message}`
+      }
+      res.render('places/new', { message } )
+    } 
     if (err || doc === null) return res.render('error404')
     res.redirect('/places')
   })
